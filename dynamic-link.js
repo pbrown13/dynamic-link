@@ -1,4 +1,5 @@
 (function () {
+  console.log("init")
   // Check if the page URL contains '/product/'
   if (!window.location.href.includes("/product/")) {
     console.warn(
