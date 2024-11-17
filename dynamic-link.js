@@ -15,6 +15,7 @@
     console.error("SKU element not found. Cannot generate iframe link.");
     return;
   }
+  
 
   const refUrl = encodeURIComponent(window.location.href);
 
