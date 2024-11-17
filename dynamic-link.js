@@ -1,5 +1,5 @@
 (function () {
-  console.log("init")
+  console.log("init");
   // Check if the page URL contains '/product/'
   if (!window.location.href.includes("/product/")) {
     console.warn(
@@ -15,7 +15,6 @@
     console.error("SKU element not found. Cannot generate iframe link.");
     return;
   }
-  
 
   const refUrl = encodeURIComponent(window.location.href);
 
@@ -39,6 +38,7 @@
   window.gtag("get", "G-DD9K9M9485", "session_id", function (sessionId) {
     if (sessionId) {
       const iframeLink = `https://web.jbweld.com/mapview?sku=${sku}&session_id=${sessionId}&user_id=${userId}&ref_url=${refUrl}`;
+      console.log(iframeLink, "<- link");
       const button = document.querySelector("#findRetailerButton");
       if (button) {
         button.href = iframeLink;
