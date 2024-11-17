@@ -1,4 +1,12 @@
 (function () {
+  // Check if the page URL contains '/product/'
+  if (!window.location.href.includes("/product/")) {
+    console.warn(
+      "The current page URL does not contain '/product/'. The link will not be generated."
+    );
+    return;
+  }
+
   // Retrieve SKU dynamically from the page
   const skuElement = document.querySelector('span[itemprop="sku"]');
   const sku = skuElement ? skuElement.textContent : null;
