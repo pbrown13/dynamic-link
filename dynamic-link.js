@@ -43,8 +43,17 @@
           // Update the link on the <a> tag with class 'cta-download'
           const ctaDownloadLink = document.querySelector("a.cta-download");
           if (ctaDownloadLink) {
-            ctaDownloadLink.href = dynamicLink;
-            console.log("CTA download link updated successfully:", dynamicLink);
+            if (dynamicLink) {
+              ctaDownloadLink.href = dynamicLink;
+              console.log(
+                "CTA download link updated successfully:",
+                dynamicLink
+              );
+            } else {
+              console.warn(
+                "No URL returned from the API. Link remains unchanged."
+              );
+            }
           } else {
             console.error("Anchor tag with class 'cta-download' not found.");
           }
