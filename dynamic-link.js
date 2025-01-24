@@ -26,7 +26,7 @@
         ? skuElement.textContent.replace("SKU: ", "")
         : null;
 
-      if (!sku) {
+      if (!sku || sku === "8281") {
         console.error("SKU element not found or invalid. Cannot proceed.");
         return;
       }
