@@ -11,7 +11,7 @@
 
   // Wait until the DOM is fully loaded
   document.addEventListener("DOMContentLoaded", async () => {
-    loadAxios(function () {
+    loadAxios(async function () {
       // Check if the page URL contains '/product/'
       if (!window.location.href.includes("/product/")) {
         console.warn(
@@ -33,13 +33,13 @@
 
       try {
         // Use axios to GET the link using the SKU
-        const response = axios.get(
+        const response = await axios.get(
           `https://jbw-app-1fb65422a0eb.herokuapp.com/sku/${sku}`
         );
 
-        if (response.status === 200 && response.data) {
-          const dynamicLink = response.data;
-
+        if (response.status === 200 && typeof response.data === "string") {
+          const dynamicLink = response.data
+          console.log("Dynamic link:", dynamicLink);
           // Update the link on the <a> tag with class 'cta-download'
           const ctaDownloadLink = document.querySelector("a.cta-download");
           if (ctaDownloadLink) {
