@@ -11,7 +11,7 @@
 
   // Wait until the DOM is fully loaded
   document.addEventListener("DOMContentLoaded", async () => {
-    loadAxios(async function () {
+    loadAxios(function () {
       // Check if the page URL contains '/product/'
       if (!window.location.href.includes("/product/")) {
         console.warn(
@@ -33,7 +33,7 @@
 
       try {
         // Use axios to GET the link using the SKU
-        const response = await axios.get(
+        const response = axios.get(
           `https://jbw-app-1fb65422a0eb.herokuapp.com/sku/${sku}`
         );
 
