@@ -34,7 +34,7 @@
       try {
         // Use axios to GET the link using the SKU
         const response = await axios.get(
-          `https://jbw-app-1fb65422a0eb.herokuapp.com/sku/${sku}`
+          `https://jbw-app-1fb65422a0eb.herokuapp.com/catsy/${sku}`
         );
 
         if (response.status === 200 && typeof response.data === "string") {
