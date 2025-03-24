@@ -1,5 +1,5 @@
 (function () {
-  console.log("test8");
+   console.log("init");
 
   // Array of SKU data
   const skuData = [
@@ -419,9 +419,9 @@
     loadAxios(async function () {
       // Check if the page URL contains '/product/'
       if (!window.location.href.includes("/product/")) {
-        console.warn(
-          "The current page URL does not contain '/product/'. The link will not be generated."
-        );
+        // console.warn(
+        //   "The current page URL does not contain '/product/'. The link will not be generated."
+        // );
         return;
       }
 
@@ -432,7 +432,7 @@
         : null;
 
       if (!sku) {
-        console.error("SKU element not found or invalid. Cannot proceed.");
+        // console.error("SKU element not found or invalid. Cannot proceed.");
         return;
       }
 
@@ -440,12 +440,12 @@
       let modifiedSku = sku;
       if (sku === '50240') {
         modifiedSku = '50240H';
-        console.log("Modified special SKU to:", modifiedSku);
+        // console.log("Modified special SKU to:", modifiedSku);
       }
 
       // Check if the SKU exists in our data array
       const skuInArray = skuExists(sku);
-      console.log(`SKU ${sku} exists in data array: ${skuInArray}`);
+      // console.log(`SKU ${sku} exists in data array: ${skuInArray}`);
       
       // Get the SKU data if it exists
       const currentSkuData = getSkuData(sku);
@@ -454,40 +454,40 @@
         // Check if the URL has the rr=true query parameter
         const urlParams = new URLSearchParams(window.location.search);
         const hasReviewParam = urlParams.get('rr') === 'true';
-        console.log("Has review parameter:", hasReviewParam);
+        // console.log("Has review parameter:", hasReviewParam);
         
         // Check if current URL matches the SKU's URL from our data
         const currentUrl = window.location.href.split('?')[0]; // Remove any query parameters
         const urlMatchesSku = currentSkuData && currentSkuData.url && currentUrl.includes(currentSkuData.url);
-        console.log("Current URL:", currentUrl);
-        console.log("SKU URL from data:", currentSkuData ? currentSkuData.url : "No data");
-        console.log("URL matches SKU:", urlMatchesSku);
+        // console.log("Current URL:", currentUrl);
+        // console.log("SKU URL from data:", currentSkuData ? currentSkuData.url : "No data");
+        // console.log("URL matches SKU:", urlMatchesSku);
         
         // Requirement 1: Show popup if rr=true param is there and SKU validation passes
         if (hasReviewParam && skuInArray && urlMatchesSku) {
-          console.log("Attempting to trigger Bazaarvoice review");
+          // console.log("Attempting to trigger Bazaarvoice review");
           // Check if Bazaarvoice is loaded
-          console.log("Bazaarvoice object exists:", !!window.$BV);
+          // console.log("Bazaarvoice object exists:", !!window.$BV);
           if (window.$BV) {
             try {
               window.$BV.ui('rr', 'submit_review', {productId: modifiedSku});
-              console.log("Bazaarvoice review submission triggered for SKU:", modifiedSku);
+              // console.log("Bazaarvoice review submission triggered for SKU:", modifiedSku);
             } catch (bvError) {
-              console.error("Error triggering Bazaarvoice review:", bvError);
+              // console.error("Error triggering Bazaarvoice review:", bvError);
             }
           } else {
-            console.warn("Bazaarvoice ($BV) not found on the page");
+            // console.warn("Bazaarvoice ($BV) not found on the page");
             // Try to wait for Bazaarvoice to load
             setTimeout(function() {
               if (window.$BV) {
                 try {
                   window.$BV.ui('rr', 'submit_review', {productId: modifiedSku});
-                  console.log("Bazaarvoice review submission triggered after delay for SKU:", modifiedSku);
+                  // console.log("Bazaarvoice review submission triggered after delay for SKU:", modifiedSku);
                 } catch (bvError) {
-                  console.error("Error triggering Bazaarvoice review after delay:", bvError);
+                  // console.error("Error triggering Bazaarvoice review after delay:", bvError);
                 }
               } else {
-                console.error("Bazaarvoice still not available after delay");
+                // console.error("Bazaarvoice still not available after delay");
               }
             }, 2000); // Wait 2 seconds
           }
@@ -497,15 +497,15 @@
         if (skuInArray && urlMatchesSku) {
           // First find the product embed section
           const productEmbedSection = document.querySelector('.layout-jbw-product-embed');
-          console.log("Product embed section found:", !!productEmbedSection);
+          // console.log("Product embed section found:", !!productEmbedSection);
           
           if (productEmbedSection) {
             // Look for the "Success Stories" heading INSIDE the product embed section
             const successStoriesHeading = productEmbedSection.querySelector('h2.section-title strong');
-            console.log("Success Stories heading found inside product embed section:", !!successStoriesHeading);
+            // console.log("Success Stories heading found inside product embed section:", !!successStoriesHeading);
             
             if (successStoriesHeading && successStoriesHeading.textContent.includes("Success Stories")) {
-              console.log("Adding LEAVE A REVIEW button after Success Stories heading");
+              // console.log("Adding LEAVE A REVIEW button after Success Stories heading");
               // Create the "LEAVE A REVIEW" button
               const reviewButton = document.createElement('a');
               reviewButton.className = 'c-quantity-button btn';
@@ -519,15 +519,15 @@
               const h2Element = successStoriesHeading.closest('h2.section-title');
               if (h2Element) {
                 h2Element.insertAdjacentElement('afterend', reviewButton);
-                console.log("Added 'LEAVE A REVIEW' button after Success Stories heading");
+                // console.log("Added 'LEAVE A REVIEW' button after Success Stories heading");
               } else {
-                console.error("Could not find parent h2 element for Success Stories heading");
+                // console.error("Could not find parent h2 element for Success Stories heading");
                 // Fallback to adding at the beginning of the product embed section
                 productEmbedSection.insertAdjacentElement('afterbegin', reviewButton);
-                console.log("Added 'LEAVE A REVIEW' button at the beginning of product embed section (fallback)");
+                // console.log("Added 'LEAVE A REVIEW' button at the beginning of product embed section (fallback)");
               }
             } else {
-              console.log("Success Stories heading not found, adding button at beginning of product embed section");
+              // console.log("Success Stories heading not found, adding button at beginning of product embed section");
               // Add at the beginning of the product embed section
               const reviewButton = document.createElement('a');
               reviewButton.className = 'c-quantity-button btn';
@@ -537,16 +537,16 @@
               reviewButton.style.display = 'inline-block';
               
               productEmbedSection.insertAdjacentElement('afterbegin', reviewButton);
-              console.log("Added 'LEAVE A REVIEW' button at beginning of product embed section");
+              // console.log("Added 'LEAVE A REVIEW' button at beginning of product embed section");
             }
           } else {
-            console.error("Product embed section not found, cannot add button");
+            // console.error("Product embed section not found, cannot add button");
           }
         } else {
-          console.log("Not adding button. Conditions:", {
-            "skuInArray": skuInArray,
-            "urlMatchesSku": urlMatchesSku
-          });
+          // console.log("Not adding button. Conditions:", {
+          //   "skuInArray": skuInArray,
+          //   "urlMatchesSku": urlMatchesSku
+          // });
         }
 
         // Use axios to GET the link using the SKU (not the modified one)
@@ -556,32 +556,32 @@
 
         if (response.status === 200 && typeof response.data === "string") {
           const dynamicLink = response.data;
-          console.log("Dynamic link:", dynamicLink);
+          // console.log("Dynamic link:", dynamicLink);
           // Update the link on the <a> tag with class 'cta-download'
           const ctaDownloadLink = document.querySelector("a.cta-download");
           if (ctaDownloadLink) {
             if (dynamicLink) {
               ctaDownloadLink.href = dynamicLink;
-              console.log(
-                "CTA download link updated successfully:",
-                dynamicLink
-              );
+              // console.log(
+              //   "CTA download link updated successfully:",
+              //   dynamicLink
+              // );
             } else {
-              console.warn(
-                "No URL returned from the API. Link remains unchanged."
-              );
+              // console.warn(
+              //   "No URL returned from the API. Link remains unchanged."
+              // );
             }
           } else {
-            console.error("Anchor tag with class 'cta-download' not found.");
+            // console.error("Anchor tag with class 'cta-download' not found.");
           }
         } else {
-          console.error(
-            "Failed to retrieve a valid response from the API.",
-            response
-          );
+          // console.error(
+          //   "Failed to retrieve a valid response from the API.",
+          //   response
+          // );
         }
       } catch (error) {
-        console.error("Error fetching the dynamic link:", error);
+        // console.error("Error fetching the dynamic link:", error);
       }
     });
   });
